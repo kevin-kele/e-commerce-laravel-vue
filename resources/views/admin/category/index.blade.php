@@ -1,17 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-           All Category
-           <b style="float:right">
-
-           <span class="badge bg-danger">
-
-           </span>
-
-           </b>
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="container">
             <div class="row">
@@ -31,6 +18,7 @@
                                     <th scope="col">Category name</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Created</th>
+                                    <th scope="col">Action</th>
                                     </tr>
                                     </thead>
 
@@ -41,6 +29,10 @@
                                     <td>{{$categorie->category_name}} </td>
                                     <td>{{$categorie->user->name}} </td>
                                     <td>{{$categorie->created_at->diffForHumans()}}</td>
+                                    <td>
+                                        <a href="{{ url('category/edit/'.$categorie->id)}}" class="btn btn-info">Edit</a>
+                                        <a href="{{ url('/category/'.$categorie->id)}}" class="btn btn-danger">Delete</a>
+                                    </td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -69,7 +61,55 @@
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-</x-app-layout>
+    <div class="py-2">
+        <div class="container">
+         <div class="row">
+             <div class="col-md-8">
+                    <div class="card">
+                    @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{session('error')}}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        <div class="card-header">All Category delete</div>
+                        <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Sl No</th>
+                                    <th scope="col">Category name</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Deleted</th>
+                                    <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+
+                                @foreach($trachCat as $trach)
+                                <tbody>
+                                    <tr>
+                                    <th scope="row">{{$trachCat->firstItem()+$loop->index}}</th>
+                                    <td>{{$trach->category_name}} </td>
+                                    <td>{{$trach->user->name}} </td>
+                                    <td>{{$trach->deleted_at->diffForHumans()}}</td>
+                                    <td>
+                                        <a href="{{url('/category/restore/'.$trach->id) }}" class="btn btn-info">restore</a>
+
+                                        <a href="{{url('/category/forceddelete/'.$trach->id)}}" class="btn btn-danger">supprimer</a>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                        </table>
+                    </div>
+                </div>
+
+
+        </div>
+         </div>
+
+     </div>
+  </x-app-layout>
