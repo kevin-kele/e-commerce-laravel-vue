@@ -21,6 +21,7 @@
                                     <th scope="col">Action</th>
                                     </tr>
                                     </thead>
+                                    source ~/.profile
 
                                 @foreach($brands as $brand)
                                 <tbody>
